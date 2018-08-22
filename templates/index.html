@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-    <h4>Hola mundo</h4>
+    {% from "_macro.html" import show_list_h %}
+
+    {{ show_list_h(title) }}
 {% endblock %}

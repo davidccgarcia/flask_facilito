@@ -1,7 +1,37 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-    {% from "_macro.html" import show_list_h %}
+    {% from "_macro.html" import render_field %}
+    
+    <form action="index_submit" method="get" accept-charset="utf-8">
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ render_field(form.username, class='form-control') }}
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ render_field(form.email, class='form-control') }}
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
 
-    {{ show_list_h(title) }}
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ render_field(form.comment, class='form-control') }}
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        
+        <br>
+        <div id="success">
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <button type="submit" class="btn btn-info">Send</button>
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}

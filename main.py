@@ -3,10 +3,19 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask_wtf import CsrfProtect
 
 import forms
 
 app = Flask(__name__)
+app.secret_key = 'my_secret_key'
+csrf = CsrfProtect(app)
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    login_form = forms.LoginForm(request.form)
+    title = 'Curso de Flask'
+    return render_template('login.html', title = title, form = login_form)
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():

@@ -4,6 +4,10 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import make_response
+from flask import session
+from flask import redirect
+from flask import url_for
+
 from flask_wtf import CsrfProtect
 
 import forms
@@ -15,8 +19,18 @@ csrf = CsrfProtect(app)
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     login_form = forms.LoginForm(request.form)
+    if request.method == 'POST' and login_form.validate():
+        session['username'] = login_form.username.data
+
     title = 'Curso de Flask'
     return render_template('login.html', title = title, form = login_form)
+
+@app.route('/logout')
+def logout():
+    if 'username' in session:
+        session.pop('username')
+
+    return redirect( url_for('login') )
 
 @app.route('/cookie')
 def cookie():
@@ -34,6 +48,10 @@ def index():
     else:
         print 'Error en el formulario'
 
+    if 'username' in session:
+        username = session['username']
+        print username
+        
     customize_cookie = request.cookies.get('customize_cookie', 'Undefined')
     print customize_cookie
     title = 'Curso de Fask'
